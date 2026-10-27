@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>C.A.S.P.E.R. | Calculadora de precios</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--line:#26364d;--text:#f4f7fb;--muted:#aab8ca;--cyan:#7dd3fc;--blue:#176b87;--green:#86efac}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#0b1220,#101d31 60%,#0c1422);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;padding:22px 14px 40px}
+main{max-width:620px;margin:0 auto}.brand{display:flex;align-items:center;gap:13px;margin:4px 0 22px}.logo{width:54px;height:54px;border:1px solid #36516e;border-radius:15px;display:grid;place-items:center;background:#172b40;color:var(--cyan);font-size:25px;font-weight:800}.brand h1{font-size:21px;letter-spacing:1.4px;margin:0}.brand p{margin:2px 0 0;color:var(--cyan);font-size:12px;letter-spacing:1.7px;font-weight:700}
+h2{font-size:26px;line-height:1.12;margin:0 0 8px}.intro{color:var(--muted);margin:0 0 20px}.card{background:rgba(18,29,46,.94);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 12px 30px #0002}.field{margin:16px 0}.field label{display:block;font-weight:650;margin-bottom:7px}.field small{display:block;color:var(--muted);margin-top:5px;font-size:12px}input{width:100%;background:#0b1423;color:var(--text);border:1px solid #34465e;border-radius:11px;padding:13px 12px;font:inherit;outline:none}input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #7dd3fc20}.rangehead{display:flex;justify-content:space-between;gap:12px;align-items:center}.rangehead output{font-weight:800;color:var(--cyan)}input[type=range]{padding:0;accent-color:#7dd3fc;margin-top:10px}.results{background:linear-gradient(135deg,#12364a,#14263c);border:1px solid #28566b;border-radius:16px;padding:18px;margin-top:18px}.eyebrow{color:#b9d8e8;font-size:12px;text-transform:uppercase;letter-spacing:1.1px;font-weight:750}.price{font-size:clamp(32px,8vw,44px);font-weight:850;letter-spacing:-1px;margin:3px 0 12px;color:#fff;overflow-wrap:anywhere}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#0b1728aa;border-radius:12px;padding:12px}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:19px;margin-top:3px}.note{font-size:12px;color:var(--muted);margin:13px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}button{border:0;border-radius:11px;padding:12px 15px;font:inherit;font-weight:750;cursor:pointer}.primary{background:var(--cyan);color:#082032}.secondary{background:#24364d;color:var(--text);border:1px solid #3b506a}.footer{text-align:center;color:#7f91a7;font-size:12px;margin-top:20px}.footer strong{color:var(--cyan)}@media(max-width:390px){.card{padding:16px}.stats{grid-template-columns:1fr}.brand h1{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="brand">
+    <div class="logo">C</div>
+    <div><h1>C.A.S.P.E.R.</h1><p>SOLUCIONES DIGITALES</p></div>
+  </header>
+  <h2>Calculadora de precios</h2>
+  <p class="intro">Calcula cuánto cobrar por un producto para alcanzar el margen de ganancia que buscas.</p>
+  <section class="card">
+    <div class="field">
+      <label for="cost">Costo total por unidad (CLP)</label>
+      <input id="cost" type="number" min="0" step="100" value="5000" inputmode="decimal">
+      <small>Incluye materiales, envase y otros costos por unidad.</small>
+    </div>
+    <div class="field">
+      <label for="extra">Otros gastos por unidad (CLP)</label>
+      <input id="extra" type="number" min="0" step="100" value="0" inputmode="decimal">
+      <small>Por ejemplo, comisión de pago o costo de entrega que asumas tú.</small>
+    </div>
+    <div class="field">
+      <div class="rangehead"><label for="margin">Margen de ganancia deseado</label><output id="marginLabel">30%</output></div>
+      <input id="margin" type="range" min="5" max="80" step="5" value="30">
+      <small>El margen se calcula sobre el precio de venta, no sobre el costo.</small>
+    </div>
+    <div class="field">
+      <label for="units">Cantidad de unidades (opcional)</label>
+      <input id="units" type="number" min="1" step="1" value="1" inputmode="numeric">
+    </div>
+    <div class="results" aria-live="polite">
+      <div class="eyebrow">Precio de venta sugerido por unidad</div>
+      <div class="price" id="price">$7.143</div>
+      <div class="stats">
+        <div class="stat"><span>Ganancia por unidad</span><strong id="profit">$2.143</strong></div>
+        <div class="stat"><span>Venta total estimada</span><strong id="total">$7.143</strong></div>
+        <div class="stat"><span>Ganancia total estimada</span><strong id="totalProfit">$2.143</strong></div>
+        <div class="stat"><span>Costo total por unidad</span><strong id="unitCost">$5.000</strong></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="share">Compartir calculadora</button>
+      <button class="secondary" id="reset">Restablecer</button>
+    </div>
+    <p class="note">Estimación orientativa. Considera impuestos, comisiones y gastos que correspondan a tu negocio. No sustituye asesoría contable.</p>
+  </section>
+  <p class="footer"><strong>C.A.S.P.E.R.</strong> · Creatividad que resuelve. Tecnología que transforma.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(Math.round(n));
+function calculate(){
+ const cost=Math.max(0,Number($('cost').value)||0);
+ const extra=Math.max(0,Number($('extra').value)||0);
+ const margin=Number($('margin').value)/100;
+ const units=Math.max(1,Math.floor(Number($('units').value)||1));
+ const base=cost+extra, price=margin<1?base/(1-margin):0, profit=price-base;
+ $('marginLabel').textContent=Math.round(margin*100)+'%';
+ $('price').textContent=money(price);
+ $('profit').textContent=money(profit);
+ $('total').textContent=money(price*units);
+ $('totalProfit').textContent=money(profit*units);
+ $('unitCost').textContent=money(base);
+}
+['cost','extra','margin','units'].forEach(id=>$(id).addEventListener('input',calculate));
+$('reset').addEventListener('click',()=>{$('cost').value=5000;$('extra').value=0;$('margin').value=30;$('units').value=1;calculate()});
+$('share').addEventListener('click',async()=>{
+ const data={title:'C.A.S.P.E.R. | Calculadora de precios',text:'Calculadora de precios C.A.S.P.E.R.'};
+ if(navigator.share){try{await navigator.share(data)}catch(e){}}
+ else if(navigator.clipboard){try{await navigator.clipboard.writeText(location.href);$('share').textContent='Enlace copiado';setTimeout(()=>$('share').textContent='Compartir calculadora',1800)}catch(e){alert('Puedes compartir el archivo HTML desde el menú de compartir de tu teléfono.')}} 
+ else alert('Puedes compartir el archivo HTML desde el menú de compartir de tu teléfono.');
+});
+calculate();
+</script>
+</body>
+</html>
